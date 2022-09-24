@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\QuestionController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,13 @@ use App\Http\Controllers\Auth\RegistrationController;
 
 Route::post('/register', [RegistrationController::class, 'store']);
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->middleware(['auth:sanctum']);
 
-// Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout']);
+    Route::get('/profile', [AuthController::class, 'profile']);
+
+    Route::prefix('/question')->group(function() {
+        Route::post('', [QuestionController::class, 'store']);
+    });
+
+});
