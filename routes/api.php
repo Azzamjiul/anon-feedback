@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [AuthController::class, 'profile']);
 
     Route::prefix('/question')->group(function() {
+        Route::get('', [QuestionController::class, 'index']);
         Route::post('', [QuestionController::class, 'store']);
     });
 

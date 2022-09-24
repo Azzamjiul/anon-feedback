@@ -9,6 +9,18 @@ use Illuminate\Support\Str;
 
 class QuestionController extends Controller
 {
+    public function index(Request $request)
+    {
+        $limit = 10;
+
+        if (!empty($request->limit)) {
+            $limit = $request->limit;
+        }
+
+        $questions = Question::paginate($limit);
+        return $questions;
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
