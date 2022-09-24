@@ -4,6 +4,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [RegistrationController::class, 'store']);
 Route::post('/login', [LoginController::class, 'login']);
 
+Route::prefix('/feedback')->group(function() {
+    Route::get('{id}', [FeedbackController::class, 'detail']);
+    Route::post('{id}', [FeedbackController::class, 'feedback']);
+});
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
@@ -28,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('/question')->group(function() {
         Route::get('', [QuestionController::class, 'index']);
         Route::post('', [QuestionController::class, 'store']);
+        Route::get('{id}/detail', [QuestionController::class, 'detail']);
     });
 
 });

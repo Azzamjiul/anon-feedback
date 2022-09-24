@@ -52,4 +52,14 @@ class QuestionController extends Controller
             'data' => $question
         ]);
     }
+
+    public function detail($id)
+    {
+        $question = Question::where('id', $id)->first();
+
+        return response()->json([
+            'message' => 'success',
+            'question' => $question
+        ]);
+    }
 }
